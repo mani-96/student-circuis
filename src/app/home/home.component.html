@@ -1,0 +1,93 @@
+<div class="processed-files">
+    <h6> {{ fileProcessing ? 'File is currently being processed... Please Wait' : 'Please upload your file' }}</h6>
+    <h6 class="all-files-link" (click)="open(content)">View Processed Files</h6>
+</div>
+<div class="dropzone" [class.processing]="fileProcessing" appDnd (fileDropped)="fileChanged($event)">
+    <input type="file" *ngIf="!fileProcessing" (change)="fileChanged($event, true)">
+    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="135" viewBox="0 0 129 135" fill="none">
+        <rect x="1.5" y="68.5" width="126" height="65" fill="white" stroke="black" stroke-width="3" />
+        <rect x="49" y="41" width="30" height="69" fill="black" />
+        <path d="M63.5 0L101.172 45H25.8279L63.5 0Z" fill="black" />
+        <rect x="21" y="55" width="28" height="32" fill="white" />
+        <rect x="79" y="55" width="28" height="32" fill="white" />
+    </svg>
+    <h3 class="mt-2">Drag and Drop File Here</h3>
+    <h3>Or</h3>
+    <label>Browse for Files</label>
+</div>
+<div class="file-name" *ngIf="file">
+    <div class="single-file">
+        <div class="file-icon" style="width: 50px">
+            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px" y="0px" viewBox="0 0 58 58" style="enable-background:new 0 0 58 58;" xml:space="preserve">
+                <polygon style="fill:#EDEADA;" points="51.5,14 37.5,0 6.5,0 6.5,58 51.5,58 " />
+                <g>
+                    <path style="fill:#CEC9AE;"
+                        d="M16.5,23h25c0.552,0,1-0.447,1-1s-0.448-1-1-1h-25c-0.552,0-1,0.447-1,1S15.948,23,16.5,23z" />
+                    <path style="fill:#CEC9AE;"
+                        d="M16.5,15h10c0.552,0,1-0.447,1-1s-0.448-1-1-1h-10c-0.552,0-1,0.447-1,1S15.948,15,16.5,15z" />
+                    <path style="fill:#CEC9AE;"
+                        d="M41.5,29h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,29,41.5,29z" />
+                    <path style="fill:#CEC9AE;"
+                        d="M41.5,37h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,37,41.5,37z" />
+                    <path style="fill:#CEC9AE;"
+                        d="M41.5,45h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,45,41.5,45z" />
+                </g>
+                <polygon style="fill:#CEC9AE;" points="37.5,0 37.5,14 51.5,14 " />
+            </svg>
+        </div>
+        <div class="info">
+            <h4 class="name">
+                {{ file?.name }}
+            </h4>
+            <div style="width: 100%; background: lightgray; border-radius: 5px;">
+                <div class="progress" [ngStyle]="{'width.%': progress}"></div>
+            </div>
+        </div>
+    </div>
+    <button *ngIf="progress == 100" class="submit" (click)="submit()">Submit</button>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title">Processed Files</h6>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <th>Line #</th>
+                    <th>File Name</th>
+                    <th>Status</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr *ngIf="filesList.length == 0">
+                        <td class="text-center" colspan="4">No file available</td>
+                    </tr>
+                    <tr *ngFor="let file of filesList; let idx = index">
+                        <td>{{idx + 1}}</td>
+                        <td>{{file.fileName}}</td>
+                        <td>{{file.status}}</td>
+                        <td class="download" (click)="download(file.fileId)">
+                            <div class="download-icon" *ngIf="file.status == 'DONE'">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 129 113"
+                                    fill="none">
+                                    <rect x="1.5" y="46.5" width="126" height="65" fill="white" stroke="black"
+                                        stroke-width="3" />
+                                    <rect x="54" width="20" height="61" fill="black" />
+                                    <path d="M64 98L40.6173 61.25L87.3827 61.25L64 98Z" fill="black" />
+                                    <rect x="26" y="29" width="28" height="32" fill="white" />
+                                    <rect x="74" y="30" width="28" height="32" fill="white" />
+                                </svg>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</ng-template>

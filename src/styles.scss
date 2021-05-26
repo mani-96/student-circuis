@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    // background-color: rgb(39, 30, 119);
+    // margin: 0px;
+}
+
+* {
+    box-sizing: border-box;
+}
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+@import '~ngx-toastr/toastr';
