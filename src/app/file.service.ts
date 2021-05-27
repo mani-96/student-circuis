@@ -28,6 +28,6 @@ export class FileService {
 
   downloadFileContent(fileId: any): Observable<any> {
     const url = this.baseUrl + 'get-file?file_id=' + fileId;
-    return this.http.get(url)
+    return this.http.get(url, { responseType: 'text' })
   }
 }

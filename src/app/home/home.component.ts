@@ -28,13 +28,24 @@ export class HomeComponent implements OnInit {
     this.file = null;
     this.progress = 0;
     if (manual) {
-      this.file = event.target.files[0];
+      if (event.target.files[0].type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || event.target.files[0].type == 'application/vnd.ms-excel' ||
+        event.target.files[0].type == ".csv" || event.target.files[0].type == "text/csv") {
+        this.file = event.target.files[0];
+        this.showFileUpload();
+      } else {
+        alert('Please upload a valid file. Accepted files types are .xlsx or .csv')
+      }
     } else {
       if (this.fileProcessing)
         return
-      this.file = event;
+      if (event.type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || event.type == 'application/vnd.ms-excel' ||
+        event.type == ".csv" || event.type == "text/csv") {
+        this.file = event;
+        this.showFileUpload();
+      } else {
+        alert('Please upload a valid file. Accepted files types are .xlsx or .csv')
+      }
     }
-    this.showFileUpload();
   }
 
   showFileUpload() {
@@ -74,11 +85,11 @@ export class HomeComponent implements OnInit {
           this.startCheckingStatus();
           this.processingUpload = false;
           if (data.error) {
-            this.toastr.error(data.message, "Error")
+            this.toastr.error(data.message, "Error");
           } else {
             this.toastr.success('File uploaded successfully', 'Success');
-            this.startCheckingStatus();
           }
+          this.startCheckingStatus();
         },
           err => {
             console.log('Error', err);
@@ -129,8 +140,16 @@ export class HomeComponent implements OnInit {
 
   }
 
-  download(id: any) {
-
+  download(id: any, filename?: any) {
+    this.fileServ.downloadFileContent(id).subscribe(data => {
+      data = "data:text/csv;charset=utf-8," + data;
+      let encodedUri = encodeURI(data);
+      var link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", (filename.split('.')[0] + ".csv"));
+      document.body.appendChild(link);
+      link.click();
+    })
   }
 
   startCheckingStatus() {
