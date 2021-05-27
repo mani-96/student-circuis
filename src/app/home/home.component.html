@@ -4,7 +4,7 @@
 </div>
 <div class="dropzone" [class.processing]="fileProcessing" appDnd (fileDropped)="fileChanged($event)">
     <input type="file" *ngIf="!fileProcessing" (change)="fileChanged($event, true)"
-        accept="text/csv, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
     <svg xmlns="http://www.w3.org/2000/svg" width="80" height="135" viewBox="0 0 129 135" fill="none">
         <rect x="1.5" y="68.5" width="126" height="65" fill="white" stroke="black" stroke-width="3" />
         <rect x="49" y="41" width="30" height="69" fill="black" />

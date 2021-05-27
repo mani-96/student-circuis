@@ -28,8 +28,7 @@ export class HomeComponent implements OnInit {
     this.file = null;
     this.progress = 0;
     if (manual) {
-      if (event.target.files[0].type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || event.target.files[0].type == 'application/vnd.ms-excel' ||
-        event.target.files[0].type == ".csv" || event.target.files[0].type == "text/csv") {
+      if (event.target.files[0].type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || event.target.files[0].type == 'application/vnd.ms-excel') {
         this.file = event.target.files[0];
         this.showFileUpload();
       } else {
@@ -38,8 +37,7 @@ export class HomeComponent implements OnInit {
     } else {
       if (this.fileProcessing)
         return
-      if (event.type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || event.type == 'application/vnd.ms-excel' ||
-        event.type == ".csv" || event.type == "text/csv") {
+      if (event.type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || event.type == 'application/vnd.ms-excel') {
         this.file = event;
         this.showFileUpload();
       } else {
@@ -77,9 +75,10 @@ export class HomeComponent implements OnInit {
     this.processingUpload = true;
     this.convertFile()
       .then((res: any) => {
+        let date = new Date();
         let postObj = {
           fileData: res.split('base64,')[1],
-          filename: this.file.name
+          filename: this.file.name + '(' + date.toLocaleDateString() + ' ' + date.toLocaleTimeString() + ')'
         };
         this.fileServ.uploadFile(postObj).subscribe(data => {
           this.startCheckingStatus();
@@ -88,6 +87,7 @@ export class HomeComponent implements OnInit {
             this.toastr.error(data.message, "Error");
           } else {
             this.toastr.success('File uploaded successfully', 'Success');
+            this.file = '';
           }
           this.startCheckingStatus();
         },
@@ -104,11 +104,10 @@ export class HomeComponent implements OnInit {
   }
 
   open(content: any) {
-    this.getAllFiles();
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg', centered: true })
+    this.getAllFiles(content);
   }
 
-  getAllFiles() {
+  getAllFiles(content: any) {
     this.fileServ.getFilesList().subscribe(data => {
       let objects: any = data;
       this.filesList = Object.keys(objects).map(key => {
@@ -118,8 +117,10 @@ export class HomeComponent implements OnInit {
           status: objects[key].status,
         }
       })
+      this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg', centered: true })
     }, err => {
       console.log('Server error', err)
+      this.toastr.error('Server responded with error. Please try again', 'Error')
     })
   }
 
