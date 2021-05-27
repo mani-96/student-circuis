@@ -2,9 +2,12 @@
     <h6>Username</h6>
     <input type="text" class="form-control form-control-sm" [formControl]="username">
     <h6 class="mt-3">Password</h6>
-    <input type="text" class="form-control form-control-sm" [formControl]="password">
+    <input type="password" class="form-control form-control-sm" (keydown.enter)="submit()" [formControl]="password">
     <button (click)="submit()" [disabled]="username.invalid || password.invalid"
         class="btn btn-primary btn-sm mt-3">Submit</button>
+    <div class="error-message" *ngIf="password.hasError('validation')">
+        Username or password didn't match. Try again!
+    </div>
 </div>
 
 <div class="back"></div>

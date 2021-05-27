@@ -46,7 +46,7 @@
             </div>
         </div>
     </div>
-    <button *ngIf="progress == 100" class="submit" (click)="submit()">Submit</button>
+    <button *ngIf="progress == 100" class="submit" (click)="submit(options)">Submit</button>
 </div>
 
 <ng-template #content let-modal>
@@ -89,6 +89,34 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template #options let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title">Credentials</h6>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="options-container" *ngIf="!optionSelected">
+            <div class="option" (click)="modal.dismiss('Option Selected'); upload()">
+                Use Default
+            </div>
+            <div class="option" (click)="optionSelected = 'credentials'">
+                Enter Credential
+            </div>
+        </div>
+        <div class="form-container" *ngIf="optionSelected == 'credentials'">
+            <h6>Username</h6>
+            <input type="text" class="form-control form-control-sm" [formControl]="username">
+            <h6>Password</h6>
+            <input type="password" class="form-control form-control-sm" [formControl]="password">
+            <button class="btn-primary btn-sm mt-3 upload-btn"
+                (click)="modal.dismiss('Cross click'); upload()">Upload</button>
         </div>
     </div>
 </ng-template>

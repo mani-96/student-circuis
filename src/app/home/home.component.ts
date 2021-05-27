@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -21,6 +21,11 @@ export class HomeComponent implements OnInit {
   filesList: Array<any> = [];
   interval: any;
   userData: any;
+  optionSelected: any = null;
+
+  username = new FormControl('', Validators.required);
+  password = new FormControl('', Validators.required)
+
 
   ngOnInit(): void {
     this.fileServ.userInfo.subscribe(data => {
@@ -79,7 +84,12 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  submit() {
+  submit(option: any) {
+    this.optionSelected = '';
+    this.modalService.open(option, { ariaLabelledBy: 'modal-basic-title', centered: true })
+  }
+
+  upload() {
     if (this.processingUpload) return;
     this.processingUpload = true;
     this.convertFile()
@@ -88,9 +98,13 @@ export class HomeComponent implements OnInit {
         let postObj = {
           fileData: res.split('base64,')[1],
           filename: this.file.name + '(' + date.toLocaleDateString() + ' ' + date.toLocaleTimeString() + ')',
-          username: this.userData.username,
-          password: this.userData.password
+          username: this.username.value,
+          password: this.password.value
         };
+        if (!this.optionSelected) {
+          delete postObj['username'];
+          delete postObj['password']
+        }
         this.fileServ.uploadFile(postObj).subscribe(data => {
           this.startCheckingStatus();
           this.processingUpload = false;
