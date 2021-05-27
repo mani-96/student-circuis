@@ -10,13 +10,16 @@ import { DndDirective } from './dnd.directive';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr'
 import { LoadingInterceptor } from './loading.interceptor';
+import { LoginComponent } from './login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    DndDirective
+    DndDirective,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,8 @@ import { LoadingInterceptor } from './loading.interceptor';
     HttpClientModule,
     NgbModalModule,
     ToastrModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule
 
   ],
   providers: [

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { FileService } from '../file.service';
@@ -11,7 +12,7 @@ import { FileService } from '../file.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private fileServ: FileService, private modalService: NgbModal, private toastr: ToastrService) { }
+  constructor(private fileServ: FileService, private modalService: NgbModal, private toastr: ToastrService, private router: Router) { }
 
   file: any;
   progress = 0;
@@ -19,9 +20,17 @@ export class HomeComponent implements OnInit {
   fileProcessing = false;
   filesList: Array<any> = [];
   interval: any;
+  userData: any;
 
   ngOnInit(): void {
+    this.fileServ.userInfo.subscribe(data => {
+      if (!data) {
+        this.router.navigate(['/login'])
+      }
+      this.userData = data;
+    })
     this.startCheckingStatus();
+
   }
 
   fileChanged(event: any, manual?: any) {
@@ -78,7 +87,9 @@ export class HomeComponent implements OnInit {
         let date = new Date();
         let postObj = {
           fileData: res.split('base64,')[1],
-          filename: this.file.name + '(' + date.toLocaleDateString() + ' ' + date.toLocaleTimeString() + ')'
+          filename: this.file.name + '(' + date.toLocaleDateString() + ' ' + date.toLocaleTimeString() + ')',
+          username: this.userData.username,
+          password: this.userData.password
         };
         this.fileServ.uploadFile(postObj).subscribe(data => {
           this.startCheckingStatus();
