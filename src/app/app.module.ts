@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,6 +12,7 @@ import { ToastrModule } from 'ngx-toastr'
 import { LoadingInterceptor } from './loading.interceptor';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ProcessedFilesComponent } from './processed-files/processed-files.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     HomeComponent,
     DndDirective,
-    LoginComponent
+    LoginComponent,
+    ProcessedFilesComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +38,10 @@ import { ReactiveFormsModule } from '@angular/forms';
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
       multi: true
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: 'en-US'
     }
   ],
   bootstrap: [AppComponent]

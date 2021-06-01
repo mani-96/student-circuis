@@ -12,15 +12,24 @@ export class FileService {
   baseUrl = "http://18.132.4.176:5000/"
 
   private _userInfo = new BehaviorSubject<any>(null);
+  private _isLoggingOut = new BehaviorSubject<any>(null)
   userInfo = this._userInfo.asObservable();
+  isLoggingOut = this._isLoggingOut.asObservable();
 
   updateUserInfo(info: any) {
+    if (!info) {
+      this._userInfo.next(null);
+      return
+    }
     let { username, password } = info;
     let obj = {
       username,
       password
     }
     this._userInfo.next(obj)
+  }
+  updateIsLoggingOut(value: any) {
+    this._isLoggingOut.next(value)
   }
 
   uploadFile(data: any): Observable<any> {

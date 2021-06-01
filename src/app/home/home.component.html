@@ -1,6 +1,10 @@
 <div class="processed-files">
     <h6> {{ fileProcessing ? 'File is currently being processed... Please Wait' : 'Please upload your file' }}</h6>
-    <h6 class="all-files-link" (click)="open(content)">View Processed Files</h6>
+    <a routerLink="/processed">
+        <h6 class="all-files-link">
+            View Processed Files
+        </h6>
+    </a>
 </div>
 <div class="dropzone" [class.processing]="fileProcessing" appDnd (fileDropped)="fileChanged($event)">
     <input type="file" *ngIf="!fileProcessing" (change)="fileChanged($event, true)"
@@ -57,39 +61,6 @@
         </button>
     </div>
     <div class="modal-body">
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <th>Line #</th>
-                    <th>File Name</th>
-                    <th>Status</th>
-                    <th></th>
-                </thead>
-                <tbody>
-                    <tr *ngIf="filesList.length == 0">
-                        <td class="text-center" colspan="4">No file available</td>
-                    </tr>
-                    <tr *ngFor="let file of filesList; let idx = index">
-                        <td>{{idx + 1}}</td>
-                        <td>{{file.fileName}}</td>
-                        <td>{{file.status}}</td>
-                        <td class="download" (click)="download(file.fileId, file.fileName)">
-                            <div class="download-icon" *ngIf="file.status == 'DONE'">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 129 113"
-                                    fill="none">
-                                    <rect x="1.5" y="46.5" width="126" height="65" fill="white" stroke="black"
-                                        stroke-width="3" />
-                                    <rect x="54" width="20" height="61" fill="black" />
-                                    <path d="M64 98L40.6173 61.25L87.3827 61.25L64 98Z" fill="black" />
-                                    <rect x="26" y="29" width="28" height="32" fill="white" />
-                                    <rect x="74" y="30" width="28" height="32" fill="white" />
-                                </svg>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
     </div>
 </ng-template>
 

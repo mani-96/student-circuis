@@ -13,13 +13,14 @@ export class LoginComponent implements OnInit {
   constructor(private fileServ: FileService, private router: Router) { }
 
   ngOnInit(): void {
+    this.fileServ.updateIsLoggingOut(false);
   }
 
   username = new FormControl('', Validators.required);
   password = new FormControl('', Validators.required);
 
   submit() {
-    if (this.username.value == 'admin@studentcircuis.com' && this.password.value == 'Blackbird101') {
+    if (this.username.value == 'admin@studentcircus.com' && this.password.value == 'Blackbird101') {
       this.fileServ.updateUserInfo({ username: this.username.value, password: this.password.value });
       this.router.navigate(['/home'])
     } else {

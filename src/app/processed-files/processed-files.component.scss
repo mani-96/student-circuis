@@ -1,0 +1,33 @@
+.table-wrapper {
+    max-height: 400px;
+    overflow: auto;
+    margin-top: 2rem;
+    table {
+      width: 100%;
+      td,th{
+        padding: 5px;
+      }
+      td {
+        word-break: break-all;
+      }
+      th {
+        position: sticky;
+        top: -1px;
+        background-color: lightgray;
+      }
+    }
+}
+
+.back-button {
+    a {
+        color: white;
+    }
+
+}
+
+@media all and (min-width: 768px) {
+    .table-wrapper {
+        max-width: 80%;
+        margin: 2rem auto;
+    }
+}
