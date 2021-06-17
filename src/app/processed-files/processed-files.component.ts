@@ -13,7 +13,7 @@ export class ProcessedFilesComponent implements OnInit {
   constructor(private title: Title, private fileServ: FileService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.title.setTitle('Student Circuis - Processed Files')
+    this.title.setTitle('Student Circus - Processed Files')
     this.getAllFiles();
   }
   filesList: any = [];

@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.title.setTitle('Student Circuis - Home')
+    this.title.setTitle('Student Circus - Home')
     this.fileServ.isLoggingOut.subscribe(data =>
       this.logout = data)
     this.fileServ.userInfo.subscribe(data => {

@@ -18,7 +18,14 @@
     border-top: 4px solid red;
     animation: spin 0.6s infinite linear;
 }
-
+.sample-button {
+    padding: 5px 8px;
+    background: lightblue;
+    border-radius: 30px;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
 .header {
     display: flex;
     flex-wrap: wrap;
@@ -27,6 +34,7 @@
     .logout {
         cursor: pointer;
         font-weight: bold;
+        margin-left: 10px;
     }
 }
 
