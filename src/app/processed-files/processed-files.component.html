@@ -14,7 +14,7 @@
                 <td>{{idx + 1}}</td>
                 <td>{{file.fileName}}</td>
                 <td>{{file.status}}</td>
-                <td class="download" (click)="download(file.fileId, file.fileName)">
+                <td class="download" (click)="downloadFileJson(file.fileId, file.fileName)">
                     <div class="download-icon" *ngIf="file.status == 'DONE'">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 129 113"
                             fill="none">

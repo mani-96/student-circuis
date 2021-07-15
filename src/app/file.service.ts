@@ -9,7 +9,7 @@ export class FileService {
 
   constructor(private http: HttpClient) { }
 
-  baseUrl = "http://65.2.144.214:5000/"
+  baseUrl = "http://13.126.188.182:5000/"
 
   private _userInfo = new BehaviorSubject<any>(null);
   private _isLoggingOut = new BehaviorSubject<any>(null)
@@ -50,5 +50,10 @@ export class FileService {
   downloadFileContent(fileId: any): Observable<any> {
     const url = this.baseUrl + 'get-file?file_id=' + fileId;
     return this.http.get(url, { responseType: 'text' })
+  }
+
+  downloadFileJson(fileId: any): Observable<any> {
+    const url = this.baseUrl + 'get-file-data?file_id=' + fileId;
+    return this.http.get(url)
   }
 }
